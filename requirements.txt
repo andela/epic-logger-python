@@ -1,2 +1,5 @@
+bugsnag==3.1.1
 colorlog==3.0.1
+six==1.10.0
+WebOb==1.7.3
 zenlog==1.1
