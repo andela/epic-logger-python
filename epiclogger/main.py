@@ -3,13 +3,13 @@ from time import time
 
 import colorlog
 
-
 class EpicTransport(logging.Handler):
     """ Handler class for logging
     """
     def __init__(self):
         """ Set logger and formatter
         """
+        logging.root.setLevel(logging.DEBUG)
         # Change this to change log format
         LOG_FORMAT = "%(asctime)s %(log_color)s%(levelname)-8s%(reset)s | %(log_color)s%(message)s%(reset)s"
         epic_format = colorlog.ColoredFormatter(fmt=LOG_FORMAT, log_colors={
