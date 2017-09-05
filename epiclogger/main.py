@@ -1,9 +1,33 @@
 import logging, traceback, os, json
 from time import time
 
+import colorlog
+
+
 class EpicTransport(logging.Handler):
     """ Handler class for logging
     """
+    def __init__(self):
+        """ Set logger and formatter
+        """
+        # Change this to change log format
+        LOG_FORMAT = "%(asctime)s %(log_color)s%(levelname)-8s%(reset)s | %(log_color)s%(message)s%(reset)s"
+        epic_format = colorlog.ColoredFormatter(fmt=LOG_FORMAT, log_colors={
+            'DEBUG':    'cyan',
+            'INFO':     'green',
+            'WARNING':  'yellow',
+            'ERROR':    'red',
+            'CRITICAL': 'red,bold',
+	    })
+
+        stream = logging.StreamHandler()
+        stream.setFormatter(epic_format)
+        self.logger = logging.getLogger('epic_logger')
+
+        # Add handler with epic format
+        self.logger.addHandler(stream)
+        super(EpicTransport, self).__init__()
+
     def emit(self, record):
         # Check production or other
         env = self.__check_environment()
@@ -17,8 +41,7 @@ class EpicTransport(logging.Handler):
     def __send_to_bugsnag(self, full_log):
         """ Send json to bugsnag
         """
-        # Convert log to json
-        # log = 
+        # Send json to bugsnag
         print("Sending to bugsnag")
 
     def __send_to_stackdriver(self, full_log):
@@ -30,7 +53,9 @@ class EpicTransport(logging.Handler):
         """ Print to stdout
         """
         # Colorize and print out
-        print (record.levelname + " " + record.msg)
+        # Reorganize the json payload to remove unnecessary info
+        if record.levelno == 
+        self.logger.log(record.levelno, record.msg)
 
     def __check_environment(self):
         env = os.environ.get("PY_ENV")
@@ -92,4 +117,3 @@ class EpicLogger(logging.Logger):
             super(EpicLogger, self).error(output)
         else:
             super(EpicLogger, self).critical(output)
-
