@@ -1,4 +1,4 @@
-import os
+import os, sys
 
 from main import EpicLogger
 
@@ -25,6 +25,8 @@ def test_log():
         # Test critical
         test.error("Cannot add numbers",{ "This": "is extra info" },type_error, 'critical')
 
-# To test uncomment any environment
-test_dev_log()
-# test_prod_log()
+if __name__ == "__main__":
+    if sys.argv[1] == "prod":
+        test_prod_log()
+    else:
+        test_dev_log()
