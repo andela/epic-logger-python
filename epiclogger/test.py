@@ -17,6 +17,7 @@ def test_log():
         test = EpicLogger()
         test.info("Here's some info")
         test.warn("And a warning")
+        test.debug("Debug")
 
         # Test error
         test.error("Adding strings and integers is not clever", {"extra":"info"}, type_error)
