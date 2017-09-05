@@ -54,8 +54,12 @@ class EpicTransport(logging.Handler):
         """
         # Colorize and print out
         # Reorganize the json payload to remove unnecessary info
-        if record.levelno == 
-        self.logger.log(record.levelno, record.msg)
+        message = record.msg
+        if record.levelno > 30:
+            raw_message = json.loads(record.msg)
+            message = raw_message["message"] + str(raw_message["metadata"])
+
+        self.logger.log(record.levelno, message)
 
     def __check_environment(self):
         env = os.environ.get("PY_ENV")
@@ -107,7 +111,7 @@ class EpicLogger(logging.Logger):
             },
             "level": level,
             "context" : context,
-            "message" : message + "Traceback: \n" + stacktrace,
+            "message" : message + stacktrace,
             "metadata": metadata
         }
 
