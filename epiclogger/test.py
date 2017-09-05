@@ -26,7 +26,7 @@ def test_log():
         test.error("Cannot add numbers",{ "This": "is extra info" },type_error, 'critical')
 
 if __name__ == "__main__":
-    if sys.argv[1] == "prod":
+    if len(sys.argv) > 1 and sys.argv[1] == "prod":
         test_prod_log()
     else:
         test_dev_log()
