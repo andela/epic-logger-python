@@ -1,5 +1,5 @@
-import logging, traceback, os
-from datetime import datetime
+import logging, traceback, os, json
+from time import time
 
 class EpicTransport(logging.Handler):
     """ Handler class for logging
@@ -18,6 +18,7 @@ class EpicTransport(logging.Handler):
         """ Send json to bugsnag
         """
         # Convert log to json
+        # log = 
         print("Sending to bugsnag")
 
     def __send_to_stackdriver(self, full_log):
@@ -55,7 +56,6 @@ class EpicLogger(logging.Logger):
         """
         if level.lower() not in ['error', 'critical']:
             level = 'ERROR'
-
         raw_traceback = traceback.format_exception(exception.__class__, exception, exception.__traceback__)
         stacktrace = ""
         for line in raw_traceback:
@@ -75,7 +75,7 @@ class EpicLogger(logging.Logger):
 
 
         output_metadata = {
-            "event_time" : datetime.now(),
+            "event_time" : time(),
             "service_context": {
                 "service" : self.service_name,
                 "service_version" : self.service_version
@@ -86,8 +86,10 @@ class EpicLogger(logging.Logger):
             "metadata": metadata
         }
 
+        output = json.dumps(output_metadata)
+
         if level == 'ERROR':
-            super(EpicLogger, self).error(output_metadata)
+            super(EpicLogger, self).error(output)
         else:
-            super(EpicLogger, self).critical(output_metadata)
+            super(EpicLogger, self).critical(output)
 
