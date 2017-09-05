@@ -1,29 +1,41 @@
-import logging, sys, traceback, os
+import logging, traceback, os
 from datetime import datetime
 
 class EpicTransport(logging.Handler):
     """ Handler class for logging
     """
     def emit(self, record):
-        # Check production
-        print (record.__dict__)
-        pass
+        # Check production or other
+        env = self.__check_environment()
+        if env != "prod":
+            self.print_to_console(record)
 
-    def __send_to_bugsnag(self, json_log):
+        if ((env == "prod" or env == "staging") and record.levelname == "ERROR"):
+            self.__send_to_bugsnag(record.msg)
+            self.__send_to_stackdriver(record.msg)
+
+    def __send_to_bugsnag(self, full_log):
         """ Send json to bugsnag
         """
-        pass
+        # Convert log to json
+        print("Sending to bugsnag")
 
-    def __send_to_stackdriver(self, json_log):
+    def __send_to_stackdriver(self, full_log):
         """ Send json to stackdriver
         """
-        pass
+        print("Sending to stackdriver")
 
-    def print_to_console(self, json_log):
+    def print_to_console(self, record):
         """ Print to stdout
         """
-        pass
+        # Colorize and print out
+        print (record.levelname + " " + record.msg)
 
+    def __check_environment(self):
+        env = os.environ.get("PY_ENV")
+        if env and env.lower() in ["prod", "staging", "test", "dev"]:
+            return env
+        return "dev"
 
 
 class EpicLogger(logging.Logger):
@@ -41,11 +53,11 @@ class EpicLogger(logging.Logger):
     def error(self, message, metadata, exception, level='ERROR'):
         """ Override error behaviour to add necessary properties
         """
-        # 1. Get traceback
-        # 2. Get metadata, if context exists, get user and correlation id
+        if level.lower() not in ['error', 'critical']:
+            level = 'ERROR'
+
         raw_traceback = traceback.format_exception(exception.__class__, exception, exception.__traceback__)
         stacktrace = ""
-
         for line in raw_traceback:
             stacktrace += line
 
@@ -63,7 +75,7 @@ class EpicLogger(logging.Logger):
 
 
         output_metadata = {
-            "event_time" : datetime.isoformat,
+            "event_time" : datetime.now(),
             "service_context": {
                 "service" : self.service_name,
                 "service_version" : self.service_version
@@ -74,12 +86,8 @@ class EpicLogger(logging.Logger):
             "metadata": metadata
         }
 
-        print(output_metadata)
-        # super(EpicLogger, self).error('Called super\'s error')
+        if level == 'ERROR':
+            super(EpicLogger, self).error(output_metadata)
+        else:
+            super(EpicLogger, self).critical(output_metadata)
 
-try:
-    1+"jehgjkg"
-except TypeError as type_error: 
-    test = EpicLogger()
-    print (sys.exc_info())
-    test.error("Cannot add numbers",{},type_error, 'crit')
