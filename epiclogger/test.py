@@ -27,6 +27,11 @@ def test_log():
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "prod":
+        try:
+            os.environ["BUGSNAG_API_KEY"] = sys.argv[2]
+        except IndexError:
+            os.environ["BUGSNAG_API_KEY"] = "failingkey"
+        os.environ["PROJECT_ROOT"] = "/Users/brianmuthui/Documents/projects/platform/epic-logger-python/"
         test_prod_log()
     else:
         test_dev_log()
