@@ -1,2 +1,4 @@
 from setuptools import setup, find_packages
-setup(url='https://github.com/andela/epic-logger-python',)
+setup(url='https://github.com/andela/epic-logger-python',
+	  name='epicloggerpython'
+	)
