@@ -33,7 +33,7 @@ class EpicTransport(logging.Handler):
 
         if self.env == "prod":
             bugsnag_api_key = os.environ.get("BUGSNAG_API_KEY") or None
-            project_root = os.environ.get("PROJECT_ROOT")
+            project_root = os.environ.get("PROJECT_ROOT") or "noroot"
             bugsnag.configure(api_key=bugsnag_api_key,
                               project_root=project_root )
 
@@ -53,6 +53,7 @@ class EpicTransport(logging.Handler):
     def __send_to_bugsnag(self, payload):
         """ Send json to bugsnag
         """
+        self.logger.info("Sending to bugsnag")
         # Send payload to bugsnag
         bs_handler = bugsnag.handlers.BugsnagHandler()
         # send only ERROR-level logs and above
