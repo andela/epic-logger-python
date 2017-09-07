@@ -31,7 +31,7 @@ if __name__ == "__main__":
             os.environ["BUGSNAG_API_KEY"] = sys.argv[2]
         except IndexError:
             os.environ["BUGSNAG_API_KEY"] = "failingkey"
-        os.environ["PROJECT_ROOT"] = "/Users/brianmuthui/Documents/projects/platform/epic-logger-python/"
+        os.environ["PROJECT_ROOT"] = os.path.abspath('..')
         test_prod_log()
     else:
         test_dev_log()
