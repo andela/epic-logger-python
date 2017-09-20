@@ -51,7 +51,7 @@ def getDevLogger(name='epic_logger'):
     handler = colorlog.StreamHandler()
 
     formatter = ConsoleFormatter(
-        "%(log_color)s%(levelname)s%(reset)s[%(asctime)s] %(module)s - %(funcName)s():L%(lineno)d - %(log_color)s%(message)s",
+        "%(log_color)s%(levelname)s%(reset)s[%(asctime)s] - %(filename)s:%(lineno)d  %(funcName)s() - %(log_color)s%(message)s",
         datefmt="%H:%M:%S",
         reset=True,
         log_colors={
