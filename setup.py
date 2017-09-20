@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='epic_logger',
-  version='0.1',
+  version='1.0.0',
   description='The funniest joke in the world',
   url='https://github.com/andela/epic-logger-python',
   author='Ikem Okonkwo',
