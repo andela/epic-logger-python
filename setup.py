@@ -11,5 +11,6 @@ setup(name='epic_logger',
   install_requires=[
     'python-json-logger',
     'bugsnag',
+    'colorlog',
   ],
   zip_safe=False)
