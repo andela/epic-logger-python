@@ -2,6 +2,8 @@ import sys
 from epic_logger import getLogger
 from datetime import datetime
 
+logger = getLogger(__name__)
+
 class Person(object):
     def __init__(self):
         self.name = 'codesword'
