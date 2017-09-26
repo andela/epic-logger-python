@@ -38,6 +38,8 @@ For the `log.error()` and `log.critical()` methods, a variable `exec_info=true` 
 import sys
 from epic_logger import getLogger
 
+logger = getLogger(__name__)
+
 def run_user_code(log):
     log.info('info message', extra={'person': 'Ikem'})
     log.debug('debug message', extra={ 'ttls': { 'core': 'ikem'}})
@@ -59,6 +61,8 @@ You can see that the logger logs the log level, the time, the file, the function
 import sys
 from epic_logger import getLogger
 from datetime import datetime
+
+logger = getLogger(__name__)
 
 def run_user_code(log):
     try:
@@ -84,6 +88,7 @@ As it is evident above, the error/ critical message appears in different shades 
 import sys
 from epic_logger import getLogger
 
+logger = getLogger(__name__)
 
 def run_user_code(log):
     log.info('info message', extra={'person': 'Ikem'})
@@ -105,6 +110,8 @@ Remember `PY_ENV` should be set to prod or staging
 import sys
 from epic_logger import getLogger
 from datetime import datetime
+
+logger = getLogger(__name__)
 
 def run_user_code(log):
     try:
