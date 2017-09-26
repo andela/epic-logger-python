@@ -1,10 +1,6 @@
-import sys, traceback
-import json
-from datetime import datetime
-sys.path.append('epic_logger')
+import sys
 from epic_logger import getLogger
-
-logger = getLogger(__name__)
+from datetime import datetime
 
 class Person(object):
     def __init__(self):
