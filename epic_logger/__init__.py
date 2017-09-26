@@ -74,6 +74,6 @@ def getDevLogger(name='epic_logger'):
 
 def getLogger(name='epic_logger'):
     env = os.getenv("PY_ENV", "development")
-    if env == "development":
+    if env == "development" or env == "test":
         return getDevLogger(name)
     return getProdLogger(name)
