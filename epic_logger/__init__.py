@@ -51,7 +51,7 @@ def getDevLogger(name='epic_logger'):
     handler = colorlog.StreamHandler()
 
     formatter = ConsoleFormatter(
-        "%(log_color)s%(levelname)s%(reset)s[%(asctime)s] - %(filename)s:%(lineno)d  %(funcName)s() - %(log_color)s%(message)s",
+         "%(log_color)s%(levelname)s%(reset)s[%(asctime)s] - %(filename)s:%(lineno)d  %(funcName)s() - %(log_color)s%(message)s",
         datefmt="%H:%M:%S",
         reset=True,
         log_colors={
@@ -74,6 +74,6 @@ def getDevLogger(name='epic_logger'):
 
 def getLogger(name='epic_logger'):
     env = os.getenv("PY_ENV", "development")
-    if env == "development" or env == "test":
+    if env == "development":
         return getDevLogger(name)
     return getProdLogger(name)
