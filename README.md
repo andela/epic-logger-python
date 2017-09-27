@@ -1,6 +1,6 @@
 Overview
 =======
-This library allows standard python logging to output log data as json objects and cosole messages. The JSON objects are more machine readable and thus can be ported to stack driver and bugsnag while the console messages have been formated to be more human readable with a capability to add details to them.
+This library allows standard python logging to output log data as json objects and console messages. The JSON objects are more machine readable and thus can be ported to stack driver and bugsnag while the console messages have been formated to be more human readable with a capability to add details to them.
 
 Installing
 ==========
