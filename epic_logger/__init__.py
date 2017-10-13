@@ -34,7 +34,10 @@ def error_handler():
 
 # A handler for sending errors to bugsnag
 def bugsnag_handler():
-    client = bugsnag.Client(api_key=os.environ.get("BUGSNAG_API_KEY"))
+    env = os.getenv("PY_ENV", "staging")
+    if env == "prod":
+        env = "production"
+    client = bugsnag.Client(api_key=os.environ.get("BUGSNAG_API_KEY"), release_stag=env)
     handler = client.log_handler()
     handler.setLevel(logging.ERROR)
     return handler
