@@ -1,8 +1,6 @@
-import sys, traceback
-import json
-from datetime import datetime
-sys.path.append('epic_logger')
+import sys
 from epic_logger import getLogger
+from datetime import datetime
 
 logger = getLogger(__name__)
 
