@@ -137,7 +137,82 @@ A valuable field to pass is the `'ctx': context` field. This one should always b
 
 ## Testing
 
+### Setup virtualenv and virtualenvwrapper
+
+- Make sure pip is installed by running pip in the terminal.
+
+```
+$ pip --version
+```
+
+- If it isn’t installed, install by doing
+
+```
+$ sudo easy_install pip
+```
+
+- Next, install virtualenv and virtualenvwrapper
+
+```
+$ sudo pip install virtualenvwrapper
+```
+
+- Open up your .bash_profile or .profile, and after your PATH statement, add the following
+
+```
+# set where virutal environments will live
+export WORKON_HOME=$HOME/.virtualenvs
+
+# ensure all new environments are isolated from the site-packages directory
+export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
+
+# use the same directory for virtualenvs as virtualenvwrapper
+export PIP_VIRTUALENV_BASE=$WORKON_HOME
+
+# makes pip detect an active virtualenv and install to it
+export PIP_RESPECT_VIRTUALENV=true
+
+if [[ -r /usr/local/bin/virtualenvwrapper.sh ]]; then
+    source /usr/local/bin/virtualenvwrapper.sh
+else
+    echo "WARNING: Can't find virtualenvwrapper.sh"
+fi
+```
+
+- Open a new terminal window. You should see virtualenvwrapper.sh being run and setting up your .virtualenvs directory
+
+- Test creating a new virtualenv
+
+```
+$ mkvirtualenv testenv
+```
+
+- You should see something in the console like
+
+```
+New python executable in testenv/bin/python
+Installing setuptools............done.
+Installing pip...............done.
+virtualenvwrapper.user_scripts creating /Users/kelsmj/.virtualenvsexport/testenv/bin/predeactivate
+virtualenvwrapper.user_scripts creating /Users/kelsmj/.virtualenvsexport/testenv/bin/postdeactivate
+virtualenvwrapper.user_scripts creating /Users/kelsmj/.virtualenvsexport/testenv/bin/preactivate
+virtualenvwrapper.user_scripts creating /Users/kelsmj/.virtualenvsexport/testenv/bin/postactivate
+virtualenvwrapper.user_scripts creating /Users/kelsmj/.virtualenvsexport/testenv/bin/get_env_details
+```
+
 To test the logging:
+
+- Create a virtulenv
+
+```
+$ mkvirtualenv testenv2
+```
+
+- Install packages
+
+```
+$ pip install -r requirements.txt
+```
 
 Run:
 - `PY_ENV=prod python example/my_test.py`  to see appearance on production/staging `<env>` can be `prod`, `staging` or `test`.
