@@ -42,10 +42,9 @@ class StackdriverErrorReportingJsonFormatter(StackdriverJsonFormatter, object):
 
     def process_log_record(self, log_record):
         sd_formatter = super(StackdriverErrorReportingJsonFormatter, self)
-        pod_array = os.getenv('POD_NAME', 'my-service-123-456').split('-')
-        version = pod_array[-2]
-        service_array = pod_array[:len(pod_array) -2]
-        service = '-'.join(service_array)
+        pod_name = os.getenv('POD_NAME', 'default-service-1234567890-abcde')
+        version = os.getenv('DEPLOYMENT_TAG', 'abcde')
+        service = pod_name[:-17]
         log_record = sd_formatter.process_log_record(log_record)
         log_record['eventTime'] = log_record['time']
         log_record['serviceContext'] = {'service': service, 'version': version}
